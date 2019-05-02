@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html >
+<head>
+    <!------------ Link to CSS Style sheet----------------------------------->
+    <script type="text/javascript" src="../static/js/custApptJS.js"></script>
+    <meta charset="UTF-8">
+</head>
+
+
+<body>
+<main class="main_layout">
+    <div id= "header">
+        <span id ="defaultHeader">{{ user.type }}</span>
+        <!-- Link to logout that will be displayed for all users, always -->
+        <nav>
+            <a id= "defaultLogout"  href="/logout">Logout</a>
+        </nav>
+    </div>
+
+    <div>
+        <nav>
+            <a id= "goHome"  href="/FixIT/templates/index.html">Go to home page</a>
+        </nav>
+    </div>
+
+    <form action="" method="post">
+        <div id="loginContainer">
+            <div id="appTimeDiv">
+                <input type="text"  id="apptTime" name="apptTime">
+                <label for="apptTime">Appointment Time</label>
+            </div>
+            <div id="appNotesDiv">
+                <textarea id="apptNotes" name="apptNotes" rows="10" cols="80">
+                </textarea>
+                <label for="apptNotes">Appointment Notes</label>
+            </div>
+            <button id="createAppointment" >Create Appointment</button>
+        </div>
+    </form>
+
+
+</main>
+</body>
+</html>
