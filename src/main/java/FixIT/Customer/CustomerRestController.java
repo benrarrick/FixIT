@@ -4,13 +4,10 @@ import FixIT.Core.AppointmentDBManager;
 import FixIT.Core.UserRestController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * This class manages HTTP endpoints for FixIT customers
@@ -39,7 +36,7 @@ public class CustomerRestController extends UserRestController<Customer> {
      * @return the customer sign-up template to the user
      */
     @RequestMapping(method= RequestMethod.GET, value="/customer/signup")
-    protected String getSignupTemplate() {
+    public String getSignupTemplate() {
         return "signup-customer";
     }
 
@@ -107,25 +104,13 @@ public class CustomerRestController extends UserRestController<Customer> {
     }
 
     /**
-     * Retrieves a customer's rating
-     *
-     * @return the customer's rating
-     */
-    @RequestMapping(method= RequestMethod.GET, value="/customer/rating")
-    protected static ResponseEntity getCustomerRating(HttpServletRequest request) {
-        String username = request.getHeader("username");
-        double rating = AppointmentDBManager.getCustomerRating(username);
-        return new ResponseEntity<>(rating, HttpStatus.OK);
-    }
-
-    /**
      * Called when a staff member views an appointment
      *
      * @return the appointment worklog template to the staff-member
      */
     @RequestMapping(method= RequestMethod.GET, value="/customer/appointment/summary")
     protected static String getWorklogTemplate(@RequestParam("appointmentID") long appointmentID, Model model) {
-        model.addAttribute("appointment", AppointmentDBManager.findAppointment(appointmentID));
+        model.addAttribute("appointment", AppointmentDBManager.getInstance().findAppointment(appointmentID));
         return "appointment-summary";
     }
 }

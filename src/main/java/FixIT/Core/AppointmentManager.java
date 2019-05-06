@@ -12,7 +12,7 @@ import java.util.List;
  */
 class AppointmentManager {
 
-    private static AppointmentDBManager appointmentDBManager = new AppointmentDBManager();
+    private static AppointmentDBManager appointmentDBManager = AppointmentDBManager.getInstance();
     private static StaffDBManager staffDBManager = StaffDBManager.getInstance();
     private static Logger logger = LoggerFactory.getLogger(AppointmentManager.class);
 
@@ -29,8 +29,6 @@ class AppointmentManager {
                 appointment.getStaffUsername(),
                 appointment.getAppointmentTime(),
                 new ArrayList<>(),
-                0,
-                0,
                 0,
                 appointment.getAppointmentCost()
         );
@@ -92,25 +90,5 @@ class AppointmentManager {
      */
     static void updateWorklog(long appointmentID, List<String> worklog) {
         appointmentDBManager.updateAppointmentWorklog(appointmentID, worklog);
-    }
-
-    /**
-     * Updates the customer rating for an appointment
-     *
-     * @param appointmentID the ID of the appointment to update
-     * @param customerRating the rating for the customer
-     */
-    static void addCustomerRating(long appointmentID, int customerRating) {
-        appointmentDBManager.addCustomerRatingToDB(appointmentID, customerRating);
-    }
-
-    /**
-     * Updates the staff rating for an appointment
-     *
-     * @param appointmentID the ID of the appointment to update
-     * @param staffRating the rating for the staff member
-     */
-    static void addStaffRating(long appointmentID, int staffRating) {
-        appointmentDBManager.addStaffRatingToDB(appointmentID, staffRating);
     }
 }

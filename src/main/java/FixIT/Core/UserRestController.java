@@ -30,10 +30,8 @@ public abstract class UserRestController<T extends User> {
             logger.warn("Invalid password");
             return new ResponseEntity<>("Invalid password", HttpStatus.BAD_REQUEST);
         }
-        else {
-            logger.info("SUCCESS");
-            return new ResponseEntity(HttpStatus.OK);
-        }
+        logger.info("SUCCESS");
+        return new ResponseEntity(HttpStatus.OK);
     }
 
     /**
@@ -55,13 +53,11 @@ public abstract class UserRestController<T extends User> {
             return new ResponseEntity<>("Username already in use",  HttpStatus.BAD_REQUEST);
         }
         // Register user and return success
-        else {
-            logger.info("Success!");
-            getDBManager().insertUserToDB(user);
-            return new ResponseEntity<>(HttpStatus.OK);
-        }
-    }
+        logger.info("Success!");
+        getDBManager().insertUserToDB(user);
+        return new ResponseEntity<>(HttpStatus.OK);
 
+    }
 
     /**
      * Used to determine if a sign-up form is invalid
@@ -69,7 +65,7 @@ public abstract class UserRestController<T extends User> {
      * @param user the user object passed up via the sign-up endpoint
      * @return true if the form contains an invalid field, false otherwise
      */
-    private boolean signUpFormInvalid(T user) {
+    private static boolean signUpFormInvalid(User user) {
         return (user.getUsername() == null || user.getUsername().equals("")) ||
                 user.getPassword() == null || user.getPassword().equals("") ||
                 user.getEmail() == null || user.getEmail().equals("") ||
@@ -82,7 +78,7 @@ public abstract class UserRestController<T extends User> {
      *
      * @return the signup template to the user
      */
-    protected abstract String getSignupTemplate();
+    public abstract String getSignupTemplate();
 
     /**
      * Retrieves the DBManager of the subclass

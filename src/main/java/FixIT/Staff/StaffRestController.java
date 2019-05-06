@@ -3,13 +3,10 @@ package FixIT.Staff;
 import FixIT.Core.AppointmentDBManager;
 import FixIT.Core.UserRestController;
 
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * This class manages HTTP endpoints for FixIT staff members
@@ -63,24 +60,12 @@ public class StaffRestController extends UserRestController<Staff> {
     }
 
     /**
-     * Retrieves a staff's rating
-     *
-     * @return the staff's rating
-     */
-    @RequestMapping(method= RequestMethod.GET, value="/staff/rating")
-    protected static ResponseEntity getStaffRating(HttpServletRequest request) {
-        String username = request.getHeader("username");
-        double rating = AppointmentDBManager.getStaffRating(username);
-        return new ResponseEntity<>(rating, HttpStatus.OK);
-    }
-
-    /**
      * Called when a staff member attempts to sign-up with FixIT
      *
      * @return the staff sign-up template to the user
      */
     @RequestMapping(method= RequestMethod.GET, value="/staff/signup")
-    protected String getSignupTemplate() {
+    public String getSignupTemplate() {
         return "signup-staff";
     }
 
@@ -101,7 +86,7 @@ public class StaffRestController extends UserRestController<Staff> {
      */
     @RequestMapping(method= RequestMethod.GET, value="/staff/appointment/worklog")
     protected static String getWorklogTemplate(@RequestParam("appointmentID") long appointmentID, Model model) {
-        model.addAttribute("appointment", AppointmentDBManager.findAppointment(appointmentID));
+        model.addAttribute("appointment", AppointmentDBManager.getInstance().findAppointment(appointmentID));
         return "staff-worklog";
     }
 }

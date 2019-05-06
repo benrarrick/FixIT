@@ -36,15 +36,17 @@ public class Application {
 
         // Launch FixIT
         logger.info("------------ FixIT Launching ------------");
-        initializeResources();
+        initializeResources(false);
         SpringApplication.run(Application.class, args);
         logger.info("------------ FixIT Launched Successfully ------------");
     }
 
-    private static void initializeResources() {
-        AppointmentDBManager.dropAppointmentTable();
-        CustomerDBManager.getInstance().dropUserTable();
-        StaffDBManager.getInstance().dropUserTable();
+    private static void initializeResources(boolean dropTable) {
+        if (dropTable) {
+            AppointmentDBManager.dropAppointmentTable();
+            CustomerDBManager.getInstance().dropUserTable();
+            StaffDBManager.getInstance().dropUserTable();
+        }
         AppointmentDBManager.createAppointmentTable();
         CustomerDBManager.getInstance().createCustomerTable();
         StaffDBManager.getInstance().createStaffTable();
@@ -55,7 +57,7 @@ public class Application {
      */
     @PreDestroy
     public static void tearDown() {
-        // TODO
+        logger.info("------------ FixIT Shutdown Successfully ------------");
     }
 
     /**
